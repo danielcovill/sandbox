@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" ></script>
+		<script src="jquery.fadingCollapsible.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<style type="text/css">
+			body
+			{
+				font-family: 'segoe ui',ariel,sans-serif;
+				font-size: 14px;
+			}
+			.collapsible
+			{
+				width: 600px;
+				float: left;
+				margin-right: 10px;
+				padding: 10px;
+				z-index: 50;
+				background-color: rgba(222,222,222,.5);
+			}
+			.collapsible2
+			{
+				width: 300px;
+				float: left;
+				padding: 10px;
+				margin-right: 10px;
+				background-color: #CCC;
+			}
+			.collapsible3
+			{
+				width: 300px;
+				float: left;
+				background-color: #00d9d9;
+				margin-right: 10px;
+			}
+			.fauxLink
+			{
+				color: rgb(0, 119, 204);
+			}
+		</style>
+		<div>
+			<div class="collapsible">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod turpis ut lacus scelerisque posuere sed ac dui. Nam tincidunt dolor quis leo lacinia eleifend interdum sapien placerat. Pellentesque vel nisl lectus. Suspendisse fringilla pretium dapibus. Vestibulum quis velit et magna vestibulum semper. Ut commodo placerat odio bibendum sodales. Mauris a dolor at lacus molestie adipiscing. Aliquam vulputate elit quis lorem egestas tincidunt. Donec odio mi, varius id vestibulum vel, sollicitudin ut elit. Donec varius porttitor risus ut egestas.
+				Integer laoreet urna pretium risus semper facilisis scelerisque elit consequat. Maecenas sit amet sem vitae eros dapibus dapibus nec at erat. Fusce non ante nisi. Suspendisse vestibulum felis a justo pretium ac laoreet purus dignissim. In sit amet purus dui. Maecenas ornare facilisis sollicitudin. Nullam cursus luctus quam, et tincidunt turpis egestas in.
+			</div>
+		</div>
+		<div style="clear: both;" />
+		<div>
+			<div class="collapsible2">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod turpis ut lacus scelerisque posuere sed ac dui. Nam tincidunt dolor quis leo lacinia eleifend interdum sapien placerat. Pellentesque vel nisl lectus. Suspendisse fringilla pretium dapibus. Vestibulum quis velit et magna vestibulum semper. Ut commodo placerat odio bibendum sodales. Mauris a dolor at lacus molestie adipiscing. Aliquam vulputate elit quis lorem egestas tincidunt. Donec odio mi, varius id vestibulum vel, sollicitudin ut elit. Donec varius porttitor risus ut egestas.
+				Integer laoreet urna pretium risus semper facilisis scelerisque elit consequat. Maecenas sit amet sem vitae eros dapibus dapibus nec at erat. Fusce non ante nisi. Suspendisse vestibulum felis a justo pretium ac laoreet purus dignissim. In sit amet purus dui. Maecenas ornare facilisis sollicitudin. Nullam cursus luctus quam, et tincidunt turpis egestas in.
+			</div>
+			<div class="collapsible3">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi euismod turpis ut lacus scelerisque posuere sed ac dui. Nam tincidunt dolor quis leo lacinia eleifend interdum sapien placerat. Pellentesque vel nisl lectus. Suspendisse fringilla pretium dapibus. Vestibulum quis velit et magna vestibulum semper. Ut commodo placerat odio bibendum sodales. Mauris a dolor at lacus molestie adipiscing. Aliquam vulputate elit quis lorem egestas tincidunt. Donec odio mi, varius id vestibulum vel, sollicitudin ut elit. Donec varius porttitor risus ut egestas.
+				<img src="soup.jpg" alt="soup" width="300" />
+				Integer laoreet urna pretium risus semper facilisis scelerisque elit consequat. Maecenas sit amet sem vitae eros dapibus dapibus nec at erat. Fusce non ante nisi. Suspendisse vestibulum felis a justo pretium ac laoreet purus dignissim. In sit amet purus dui. Maecenas ornare facilisis sollicitudin. Nullam cursus luctus quam, et tincidunt turpis egestas in.
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function() {
+					$(".collapsible").fadingCollapsible();
+					$(".collapsible2").fadingCollapsible({'opened':true});
+					$(".collapsible3").fadingCollapsible({'closed-height':'370px'});
+			});
+		</script>
+	</body>
+</html>
