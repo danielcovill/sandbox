@@ -61,9 +61,12 @@ public class Solutions {
 //
 //		EulerProblem p15 = new Problem15("Problem 15", "How many routes are there through a 2020 grid?");
 //		System.out.println(String.format("%s - runtime: %s", p15.getSolution(), p15.getLastExecutionTime()));
+//
+//		EulerProblem p15b = new Problem15b("Problem 15b", "How many routes are there through a 2020 grid?");
+//		System.out.println(String.format("%s - runtime: %s", p15b.getSolution(), p15b.getLastExecutionTime()));
 
-		EulerProblem p15b = new Problem15b("Problem 15b", "How many routes are there through a 2020 grid?");
-		System.out.println(String.format("%s - runtime: %s", p15b.getSolution(), p15b.getLastExecutionTime()));
+		EulerProblem p16 = new Problem16("Problem 16", "What is the sum of the digits of the number Math.pow(2, 1000)?");
+		System.out.println(String.format("%s - runtime: %s", p16.getSolution(), p16.getLastExecutionTime()));
 		
 		System.out.println("Run complete");
 	}
