@@ -58,9 +58,12 @@ public class Solutions {
 //
 //		EulerProblem p14b = new Problem14b("Problem 14b", "Which starting number, under one million, produces the longest Collatz sequence?");
 //		System.out.println(String.format("%s - runtime: %s", p14b.getSolution(), p14b.getLastExecutionTime()));
-		
-		EulerProblem p15 = new Problem15("Problem 15", "How many routes are there through a 2020 grid?");
-		System.out.println(String.format("%s - runtime: %s", p15.getSolution(), p15.getLastExecutionTime()));
+//
+//		EulerProblem p15 = new Problem15("Problem 15", "How many routes are there through a 2020 grid?");
+//		System.out.println(String.format("%s - runtime: %s", p15.getSolution(), p15.getLastExecutionTime()));
+
+		EulerProblem p15b = new Problem15b("Problem 15b", "How many routes are there through a 2020 grid?");
+		System.out.println(String.format("%s - runtime: %s", p15b.getSolution(), p15b.getLastExecutionTime()));
 		
 		System.out.println("Run complete");
 	}
