@@ -64,9 +64,21 @@ public class Solutions {
 //
 //		EulerProblem p15b = new Problem15b("Problem 15b", "How many routes are there through a 2020 grid?");
 //		System.out.println(String.format("%s - runtime: %s", p15b.getSolution(), p15b.getLastExecutionTime()));
+//
+//		EulerProblem p16 = new Problem16("Problem 16", "What is the sum of the digits of the number Math.pow(2, 1000)?");
+//		System.out.println(String.format("%s - runtime: %s", p16.getSolution(), p16.getLastExecutionTime()));
+//
+//		EulerProblem p17 = new Problem17("Problem 17", "If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?");
+//		System.out.println(String.format("%s - runtime: %s", p17.getSolution(), p17.getLastExecutionTime()));
+//		
+//		EulerProblem p17b = new Problem17b("Problem 17b", "If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?");
+//		System.out.println(String.format("%s - runtime: %s", p17b.getSolution(), p17b.getLastExecutionTime()));
+//
+//		EulerProblem p18 = new Problem18("Problem 18", "Find the maximum total from top to bottom of a given triangle.");
+//		System.out.println(String.format("%s - runtime: %s", p18.getSolution(), p18.getLastExecutionTime()));
 
-		EulerProblem p16 = new Problem16("Problem 16", "What is the sum of the digits of the number Math.pow(2, 1000)?");
-		System.out.println(String.format("%s - runtime: %s", p16.getSolution(), p16.getLastExecutionTime()));
+		EulerProblem p19 = new Problem19("Problem 19", "Find the maximum total from top to bottom of a given triangle.");
+		System.out.println(String.format("%s - runtime: %s", p19.getSolution(), p19.getLastExecutionTime()));
 		
 		System.out.println("Run complete");
 	}
