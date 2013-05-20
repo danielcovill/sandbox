@@ -4,7 +4,7 @@ var projectEuler = {};
 window.onload = function() {
 	var resultsTable = document.getElementById('eulerResults');
 	
-	for(var i=19;i<=20;i++) {
+	for(var i=19;i<=21;i++) {
 		console.time('Problem ' + i);
 		loadScript('problem' + i + '.js', runProblem(i));
 		console.timeEnd('Problem ' + i);
