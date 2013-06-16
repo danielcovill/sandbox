@@ -76,9 +76,12 @@ public class Solutions {
 //
 //		EulerProblem p18 = new Problem18("Problem 18", "Find the maximum total from top to bottom of a given triangle.");
 //		System.out.println(String.format("%s - runtime: %s", p18.getSolution(), p18.getLastExecutionTime()));
+//
+//		EulerProblem p19 = new Problem19("Problem 19", "Find the maximum total from top to bottom of a given triangle.");
+//		System.out.println(String.format("%s - runtime: %s", p19.getSolution(), p19.getLastExecutionTime()));
 
-		EulerProblem p19 = new Problem19("Problem 19", "Find the maximum total from top to bottom of a given triangle.");
-		System.out.println(String.format("%s - runtime: %s", p19.getSolution(), p19.getLastExecutionTime()));
+		EulerProblem p22 = new Problem22("Problem 22", "What is the total of all the name scores in the file?");
+		System.out.println(String.format("%s - runtime: %s", p22.getSolution(), p22.getLastExecutionTime()));
 		
 		System.out.println("Run complete");
 	}
