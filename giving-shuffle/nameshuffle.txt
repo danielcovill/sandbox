@@ -1,0 +1,14 @@
+Name, Clan, Previous Pick
+
+Web page loads a json document (previous year's data)
+At this point you can add/remove names
+Click a button that performs javascript name shuffle to determine this year's new picks
+Click a button to export a new json document that we can save for the following year
+
+Data structure:
+List of People
+[{Id,Name,Clan,PreviousPickId},{Id,Name,Clan,PreviousPickId},{Id,Name,Clan,PreviousPickId}]
+
+Web Page:
+Table #1 contains Name, Clan, and Previous Pick 
+A column is added when the shuffle button 

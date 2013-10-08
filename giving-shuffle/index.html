@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>Giving Shuffle</title>
+	<link href="css/flick/jquery-ui-1.10.3.custom.css" rel="stylesheet">
+	<link href="css/site.css" rel="stylesheet">
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery-ui-1.10.3.custom.js"></script>
+	<script src="js/giving-shuffle.js"></script>
+</head>
+<body>
+	<div class="header ui-widget-header">
+
+	</div>
+	<div class="content">
+
+		<div class="people">
+			<h2>People</h2>
+			<ul id="people-list">
+				<li class="ui-widget ui-corner-all ui-state-default">
+					<span class="userfield name">Daniel</span>
+					<span class="hidden userId">132</span>
+					<span class="userfield clan">(CovillClan)</span>
+					<span class="hidden clanId"></span>
+					<span class="ui-icon ui-icon-closethick close"></span>
+				</li>
+			</ul>
+			<div class="buttons">
+				<div class="openAddPerson">Add</div>
+				<div class="shufflePeople">Shuffle</div>
+			</div>
+			<div id="addPersonModal" class="modal">
+				<div>
+					<label for="newName">Name</label>
+					<input type="text" id="newName" />
+				</div>
+				<div>
+					<label for="newClan">Clan</label>
+					<input type="text" id="newClan" />
+				</div>
+			</div>
+		</div>
+
+		<div class="shuffle">
+			<h2>Shuffle Results</h2>
+			<ul id="shuffle-results">
+				<li class="ui-widget ui-corner-all ui-state-default">
+					<span class="userfield name">Daniel</span>
+					<span class="hidden userId"></span>
+					<span class="userfield clan">(CovillClan)</span>
+					<span class="hidden clanId"></span>
+					<span class="ui-icon ui-icon-circle-arrow-e rightArrow"></span>
+					<span class="userfield target">Jean</span>
+					<span class="hidden targetId"></span>
+				</li>
+			</ul>
+		</div>
+
+	</div>
+</body>
+</html>

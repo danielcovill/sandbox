@@ -1,0 +1,87 @@
+//v4 GUID
+function getGuid() {
+	'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+		return v.toString(16);
+	});
+}
+
+function userNameExists(name) {
+	var result = false;
+	$('#peopleList>li>.name').each(function(index, element) {
+		if($(element).text().toLowerCase() == name.toLowerCase()) {
+			result = true;
+			return false;//same as 'break'
+		}
+	});
+	return result;
+}
+
+function addUser(name, clan) {
+	if(!userNameExists(name)) {
+		$('#peopleList').append('<li class="ui-widget ui-corner-all ui-state-default">test</li>');
+	} else {
+		//display an error
+		showError('Name already exists');
+		console.log('User with name: ' + name + ' already exists');
+	}
+}
+
+function editUser() {
+	
+}
+
+function removeUser(id) {
+	
+}
+
+function shuffleArray(toShuffle) {
+   for (var i = toShuffle.length - 1; i > 0; i--) {
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp = toShuffle[i];
+		toShuffle[i] = toShuffle[j];
+		toShuffle[j] = temp;
+	}
+}
+
+function importData() {
+
+}
+
+function exportData() {
+
+}
+
+function showError(errorText) {
+
+}
+
+$(function() {
+	$('.close').button().click(function() {
+		if (confirm('Click OK to delete this user.')) {
+			removeUser($(this).parent('li'));
+		}
+	});
+	$('.openAddPerson').button().click(function() {
+		$('#addPersonModal').dialog('open');
+	});
+	$('#addPersonModal').dialog({
+		title: 'Add new',
+		autoOpen: false,
+		height: 220,
+		width: 350,
+		modal: true,
+		buttons: {
+			'Add': function() {
+				addUser($('#newName').val(), $('#newClan').val());
+				$(this).dialog('close');
+			},
+		  Cancel: function() {
+				$(this).dialog('close');
+		  }
+		},
+		close: function() {
+			$('input').val('');
+		}
+	});
+});
