@@ -90,14 +90,40 @@ function allSameClan(list) {
 	return result;
 }
 
+function shuffleArray(array) {
+	for (var i = array.length - 1; i > 0; i--) {
+		var j = Math.floor(Math.random() * (i + 1));
+		var temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+	return array;
+}
+
+/*
+ * Adds a person element to a 2d array where elements are grouped by their clan
+ */
+function addElementToGroupCollection(element, collection) {
+	for(var i=0;i<collection.length;i++) {
+		var clanExists = false;
+		if(!collection[i][0].clanId && !element.clanId || 
+			 collection[i][0].clanId == element.clanId) {
+			clanExists = true;
+			collection[i].push(element);
+		}
+		if(!clanExists) {
+			collection.push([ element ]);
+		}
+	}
+}
+
 function shuffleUsers() {
 	var toShuffle = [];
-	var allNames = [];
+	var groupCollection = [];
+	var overflowGroup = [];
+	
+	//assemble list of names
 	$('#people-list>li').each(function(index, element) {
-		allNames.push({
-			userId: $(element).find('.userId').text(), 
-			clanId: $(element).find('.clanId').text()
-		});
 		toShuffle.push({
 			name: $(element).find('.name').text(), 
 			userId: $(element).find('.userId').text(), 
@@ -107,20 +133,59 @@ function shuffleUsers() {
 		});
 	});
 
+	//shuffle based on goal of avoiding people getting people from last year 
+	//and avoiding people in the same clan
 	$(toShuffle).each(function(index, element) {
-		var randomIndex = Math.floor(Math.random() * allNames.length);
-
-		while((!allNames[randomIndex].clanId || allNames[randomIndex].clanId == element.clanId) && 
-			!allSameClan(allNames) && 
-			allNames[randomIndex].previousTargetId != element.userId &&
-			allNames.length > 1) 
-		{
-			randomIndex = Math.floor(Math.random() * allNames.length);
-		}
-		element.targetName = allNames[randomIndex].name;
-		element.targetId = allNames[randomIndex].userId;
-		allNames.splice(randomIndex,1);
+		addElementToGroupCollection(element, groupCollection);
 	});
+
+	var longestGroupLength = 0;
+	var longestGroupIndex = 0;
+
+	//shuffle each group and determine which one is the longest 
+	for(var i=0;i<groupCollection.length;i++) {
+		shuffleArray(groupCollection[i]);	
+		if(groupCollection[i].length > longestGroupLength) {
+			longestGroupLength = groupCollection[i].length;
+			longestGroupIndex = i;
+		}
+	}
+
+	//put items from a group too long into the overflow group (as long as it's not the "no group" group)
+	if(longestGroupLength > toShuffle.length / 2 && !!groupCollection[longestGroupIndex][0].groupId) {
+		overflowGroup = groupCollection[longestGroupIndex].splice(Math.floor(toShuffle.length), toShuffle.length - Math.floor(toShuffle.length))
+	}
+
+	for(var i=0;i<groupCollection.length;i++) {
+		var availableOptions = [];
+		//go through and assemble available items for this set
+		for(var k=i;k<groupCollection.length;k++) {
+			for(var j=0;j<groupCollection[k].length;j++) {
+				if(!groupCollection[k][j].assigned) {
+					availableOptions.push(groupCollection[k][j];
+				}
+			}
+		}
+
+		for(var j=0;j<groupCollection[i].length;j++) {
+
+			//pick a random group that's not this group
+			var rand_i = (Math.floor(Math.random() * groupCollection.length) + (i + 1));
+			//pick a random element from that group
+			var rand_j = Math.floor(Math.random() * groupCollection[rand_i].length);
+
+			//if that item hasn't been matched to someone already
+			//and
+			//if that item wasn't this person's previous match
+			//and
+			//if there's more than one option left (computationally intensive?)
+			
+			//doing this this way will result in lots of collisions as you match out the last of the people
+			//need to come up with a set where unavailable items are removed
+			groupCollection[i][j].targetId
+			groupCollection[i][j].previousTargetId
+		}
+	}
 
 	//construct shuffled list
 	$(toShuffle).each(function(index, element) {
@@ -130,7 +195,7 @@ function shuffleUsers() {
 		var userId = $(document.createElement('span')).addClass('hidden userId').text(element.userId);
 		var clanElement = $(document.createElement('span')).addClass('userfield clan');
 		if(element.clan) {
-			clanElement.text('(' + element.clan + ')');
+			clanElement.text(element.clan);
 		}
 		var clanId = $(document.createElement('span')).addClass('hidden clanId');
 		if(element.clanId) {
