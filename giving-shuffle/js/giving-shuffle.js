@@ -23,7 +23,65 @@ function getClanId(clan) {
 	});
 }
 
-function addUser(name, clan) {
+function importUser(name, id, clan, clanid, prevTargetId) {
+	if(!userIdExists(id)) {
+		var newPersonElement = $(document.createElement('li'));
+		newPersonElement.addClass('ui-widget ui-corner-all ui-state-default');
+		var nameElement = $(document.createElement('span')).addClass('userfield name').text(name);
+		var userId = $(document.createElement('span')).addClass('hidden userId').text(id);
+		var clanElement = $(document.createElement('span')).addClass('userfield clan');
+		if(clan) {
+			clanElement.text('(' + clan + ')');
+		}
+		if(!clanId) {
+			clanId = $(document.createElement('span')).addClass('hidden clanId').text(getGuid());
+		}
+		var deleteIcon = $(document.createElement('span'))
+			.addClass('ui-icon ui-icon-closethick close')
+			.button().click(function() {
+				if (confirm('Click OK to delete this user.')) {
+					deleteUser($(this).parents('li'));
+				}
+			});
+
+		newPersonElement.append(nameElement);
+		newPersonElement.append(userId);
+		newPersonElement.append(clanElement);
+		newPersonElement.append(clanId);
+		newPersonElement.append(deleteIcon);
+		$('#people-list').append(newPersonElement);
+	} else {
+		console.log('User with id: ' + id + ' already exists');
+		//find that person and update their values with what was saved
+		var existingPersonElement = $(document.createElement('li'));
+		existingPersonElement.addClass('ui-widget ui-corner-all ui-state-default');
+		var nameElement = $(document.createElement('span')).addClass('userfield name').text(name);
+		var userId = $(document.createElement('span')).addClass('hidden userId').text(id);
+		var clanElement = $(document.createElement('span')).addClass('userfield clan');
+		if(clan) {
+			clanElement.text('(' + clan + ')');
+		}
+		if(!clanId) {
+			clanId = $(document.createElement('span')).addClass('hidden clanId').text(getGuid());
+		}
+		var deleteIcon = $(document.createElement('span'))
+			.addClass('ui-icon ui-icon-closethick close')
+			.button().click(function() {
+				if (confirm('Click OK to delete this user.')) {
+					deleteUser($(this).parents('li'));
+				}
+			});
+
+		existingPersonElement.append(nameElement);
+		existingPersonElement.append(userId);
+		existingPersonElement.append(clanElement);
+		existingPersonElement.append(clanId);
+		existingPersonElement.append(deleteIcon);
+		$('#people-list').append(existingPersonElement);
+	}
+}
+
+function addNewUser(name, clan) {
 	if(!userNameExists(name)) {
 		var newPersonElement = $(document.createElement('li'));
 		newPersonElement.addClass('ui-widget ui-corner-all ui-state-default');
@@ -62,16 +120,32 @@ function deleteUser(element) {
 	element.remove()
 }
 
-function editUser() {
-	
-}
-
-function importData() {
-
+function importData(data) {
+	var userSet = $.parseJSON(data);
+	if(!!userSet) {
+		$('.shuffle').hide();
+		$('#people-list').empty();
+	}
+	for(var i=0;i<userSet.userList.length;i++) {
+		importUser(userSet.userList[i].name, userSet.userList[i].userId, userSet.userList[i].clan, userSet.userList[i].clanId, userSet.userList[i].prevTargetId);
+	}
 }
 
 function exportData() {
-
+	var toExport = {};
+	toExport.date = new Date();
+	toExport.userList = [];
+	$('#shuffle-results>li').each(function(index, element) {
+		toExport.userList.push({
+			name: $(element).find('.name').text(), 
+			userId: $(element).find('.userId').text(), 
+			clan: $(element).find('.clan').text().substr(1,$(element).find('.clan').text().length-2),
+			clanId: $(element).find('.clanId').text(),
+			previousTargetId: $(element).find('.targetId').text()
+		});
+	});
+	var data = JSON.stringify(toExport);
+	$('#exportData').html(data);
 }
 
 function showError(errorText) {
@@ -115,6 +189,36 @@ function addElementToGroupCollection(element, collection) {
 			collection.push([ element ]);
 		}
 	}
+	if(collection.length == 0) {
+		collection.push([ element ]);
+	}
+}
+
+function addShuffleResult(user_name, user_id, user_clan, user_clan_id, target_name, target_id) {
+	var newPairElement = $(document.createElement('li'));
+	newPairElement.addClass('ui-widget ui-corner-all ui-state-default');
+	var nameElement = $(document.createElement('span')).addClass('userfield name').text(user_name);
+	var userId = $(document.createElement('span')).addClass('hidden userId').text(user_id);
+	var clanElement = $(document.createElement('span')).addClass('userfield clan');
+	if(user_clan) {
+		clanElement.text('(' + user_clan + ')');
+	}
+	var clanId = $(document.createElement('span')).addClass('hidden clanId');
+	if(user_clan_id) {
+		clanId.text(user_clan_id);
+	}
+	var targetElement = $(document.createElement('span')).addClass('userfield target').text(target_name);
+	var targetId = $(document.createElement('span')).addClass('hidden targetId').text(target_id);
+
+	var arrowIcon = $(document.createElement('span')).addClass('ui-icon ui-icon-circle-arrow-e rightArrow');
+	newPairElement.append(nameElement);
+	newPairElement.append(userId);
+	newPairElement.append(clanElement);
+	newPairElement.append(clanId);
+	newPairElement.append(arrowIcon);
+	newPairElement.append(targetElement);
+	newPairElement.append(targetId);
+	$('#shuffle-results').append(newPairElement);
 }
 
 function shuffleUsers() {
@@ -127,7 +231,7 @@ function shuffleUsers() {
 		toShuffle.push({
 			name: $(element).find('.name').text(), 
 			userId: $(element).find('.userId').text(), 
-			clan: $(element).find('.clan').text(),
+			clan: $(element).find('.clan').text().substr(1,$(element).find('.clan').text().length-2),
 			clanId: $(element).find('.clanId').text(),
 			previousTargetId: $(element).find('.previous-target-Id').text()
 		});
@@ -152,72 +256,78 @@ function shuffleUsers() {
 	}
 
 	//put items from a group too long into the overflow group (as long as it's not the "no group" group)
+	var usingOverflow = false;
 	if(longestGroupLength > toShuffle.length / 2 && !!groupCollection[longestGroupIndex][0].groupId) {
-		overflowGroup = groupCollection[longestGroupIndex].splice(Math.floor(toShuffle.length), toShuffle.length - Math.floor(toShuffle.length))
+		overflowGroup = groupCollection[longestGroupIndex].splice(Math.floor(toShuffle.length), toShuffle.length - Math.floor(toShuffle.length));
+		usingOverflow = true;
 	}
 
 	for(var i=0;i<groupCollection.length;i++) {
+		
+		//go through and assemble available items for this group
 		var availableOptions = [];
-		//go through and assemble available items for this set
-		for(var k=i;k<groupCollection.length;k++) {
-			for(var j=0;j<groupCollection[k].length;j++) {
-				if(!groupCollection[k][j].assigned) {
-					availableOptions.push(groupCollection[k][j];
+		for(var k=0;k<groupCollection.length;k++) {
+			//don't assign people to the group they're in unless it's the overflow group or it's the only group
+			if(k!=i || (usingOverflow && k==groupCollection.length-1) || groupCollection.length == 1) { 
+				for(var j=0;j<groupCollection[k].length;j++) {
+					if(!groupCollection[k][j].assigned) {
+						availableOptions.push(groupCollection[k][j]);
+					}
 				}
 			}
 		}
-
+		
+		//for each person in the group
 		for(var j=0;j<groupCollection[i].length;j++) {
 
-			//pick a random group that's not this group
-			var rand_i = (Math.floor(Math.random() * groupCollection.length) + (i + 1));
-			//pick a random element from that group
-			var rand_j = Math.floor(Math.random() * groupCollection[rand_i].length);
+			//pick a random item from the list of available options
+			var randIndex = (Math.floor(Math.random() * availableOptions.length));
 
-			//if that item hasn't been matched to someone already
-			//and
-			//if that item wasn't this person's previous match
-			//and
-			//if there's more than one option left (computationally intensive?)
+			//while that item was this person's previous match and if there's more than one option left, pick a new random
+			while((groupCollection[i][j].previousTargetId == availableOptions.userId) && (availableOptions.length > 1)) {
+				randIndex = (Math.floor(Math.random() * availableOptions.length));
+			}
 			
-			//doing this this way will result in lots of collisions as you match out the last of the people
-			//need to come up with a set where unavailable items are removed
-			groupCollection[i][j].targetId
-			groupCollection[i][j].previousTargetId
+			//once you have a good (enough) random, assign it and move on
+			var selectedOption = availableOptions.splice(randIndex, 1)[0];
+			groupCollection[i][j].previousTargetId = groupCollection[i][j].targetId;
+			groupCollection[i][j].targetName = selectedOption.name;
+			groupCollection[i][j].targetId = selectedOption.userId;
+
+			//need to mark the user as having been assigned
+			selectedOption.assigned = true;
+			
 		}
+
 	}
 
 	//construct shuffled list
-	$(toShuffle).each(function(index, element) {
-		var newPairElement = $(document.createElement('li'));
-		newPairElement.addClass('ui-widget ui-corner-all ui-state-default');
-		var nameElement = $(document.createElement('span')).addClass('userfield name').text(element.name);
-		var userId = $(document.createElement('span')).addClass('hidden userId').text(element.userId);
-		var clanElement = $(document.createElement('span')).addClass('userfield clan');
-		if(element.clan) {
-			clanElement.text(element.clan);
+	$('#shuffle-results').empty();
+	$('.shuffle').show();
+	for(var i=0;i<groupCollection.length;i++) {
+		for(var j=0;j<groupCollection[i].length;j++) {
+			var element = groupCollection[i][j];
+			addShuffleResult(element.name, element.userId, element.clan, element.clanId, element.targetName, element.targetId);
 		}
-		var clanId = $(document.createElement('span')).addClass('hidden clanId');
-		if(element.clanId) {
-			clanId.text(element.clanId);
-		}
-		var arrowIcon = $(document.createElement('span')).addClass('ui-icon ui-icon-circle-arrow-e rightArrow');
-		var targetElement = $(document.createElement('span')).addClass('userfield target').text(element.targetName);
-		var targetId = $(document.createElement('span')).addClass('hidden targetId').text(element.targetId);
-	
-		newPairElement.append(nameElement);
-		newPairElement.append(userId);
-		newPairElement.append(clanElement);
-		newPairElement.append(clanId);
-		newPairElement.append(arrowIcon);
-		newPairElement.append(targetElement);
-		newPairElement.append(targetId);
-		$('#shuffle-results').append(newPairElement);
-	});
+	}
 
+	for(shuffleResult in $('#shuffle-results').children('li')){
+		console.log($(shuffleResult));
+	}
 }
 
+var currentShuffleJSON;
 $(function() {
+
+	$('.openImport').button().click(function() {
+		$('#importModal').dialog('open');
+	});
+
+	$('.openExport').button().click(function() {
+		exportData();
+		$('#exportModal').dialog('open');
+	});
+
 	$('.close').button().click(function() {
 		if (confirm('Click OK to delete this user.')) {
 			deleteUser($(this).parents('li'));
@@ -229,6 +339,29 @@ $(function() {
 	$('.openAddPerson').button().click(function() {
 		$('#addPersonModal').dialog('open');
 	});
+	$('#exportModal').dialog({
+		title: 'Export',
+		autoOpen: false,
+		height: 220,
+		width: '80%',
+		modal: true,
+	});
+	$('#importModal').dialog({
+		title: 'Import',
+		autoOpen: false,
+		height: 300,
+		width: '80%',
+		modal: true,
+		buttons: {
+			Cancel: function() {
+				$(this).dialog('close');
+			},
+			'Submit': function() {
+				importData($('#importData').val());
+				$(this).dialog('close');
+			}
+		}
+	});
 	$('#addPersonModal').dialog({
 		title: 'Add new',
 		autoOpen: false,
@@ -237,7 +370,7 @@ $(function() {
 		modal: true,
 		buttons: {
 			'Add': function() {
-				addUser($('#newName').val(), $('#newClan').val());
+				addNewUser($('#newName').val(), $('#newClan').val());
 				$(this).dialog('close');
 			},
 		  Cancel: function() {

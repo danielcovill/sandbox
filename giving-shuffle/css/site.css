@@ -70,6 +70,7 @@ h2
 }
 .shuffle
 {
+	display: none;
 	float:left;
 	width: 470px;
 }
@@ -94,8 +95,8 @@ label
 }
 .header
 {
-	height: 30px;
 	width: 100%;
+	padding: 5px 8px;
 }
 .userfield 
 {
@@ -118,13 +119,17 @@ label
 }
 .buttons:before,
 .buttons:after {
-    content:"";
-    display:table;
+	content:"";
+	display:table;
 }
 .buttons:after {
-    clear:both;
+	clear:both;
 }
 /* For IE 6/7 (trigger hasLayout) */
 .buttons {
-    zoom:1;
+	zoom:1;
+}
+#importData {
+	width: 95%;
+	height: 145px;
 }

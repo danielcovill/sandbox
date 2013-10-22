@@ -11,45 +11,19 @@
 </head>
 <body>
 	<div class="header ui-widget-header">
-
+		<div class="openImport">Import</div>
+		<div class="openExport">Export</div>
+		<div id="importModal" class="modal">
+			<textarea id="importData"></textarea>
+		</div>
+		<div id="exportModal" class="modal">
+			<div id="exportData"></div>
+		</div>
 	</div>
 	<div class="content">
-
 		<div class="people">
 			<h2>People</h2>
 			<ul id="people-list">
-				<li class="ui-widget ui-corner-all ui-state-default">
-					<span class="userfield name">Daniel</span>
-					<span class="hidden userId">1</span>
-					<span class="userfield clan">(Clan)</span>
-					<span class="hidden clanId"></span>
-					<span class="hidden prevous-target-Id"></span>
-					<span class="ui-icon ui-icon-closethick close"></span>
-				</li>
-				<li class="ui-widget ui-corner-all ui-state-default">
-					<span class="userfield name">Jean</span>
-					<span class="hidden userId">2</span>
-					<span class="userfield clan">(Clan)</span>
-					<span class="hidden clanId"></span>
-					<span class="hidden prevous-target-Id"></span>
-					<span class="ui-icon ui-icon-closethick close"></span>
-				</li>
-				<li class="ui-widget ui-corner-all ui-state-default">
-					<span class="userfield name">Dennis</span>
-					<span class="hidden userId">3</span>
-					<span class="userfield clan">(Clan)</span>
-					<span class="hidden clanId"></span>
-					<span class="hidden prevous-target-Id"></span>
-					<span class="ui-icon ui-icon-closethick close"></span>
-				</li>
-				<li class="ui-widget ui-corner-all ui-state-default">
-					<span class="userfield name">Jason</span>
-					<span class="hidden userId">4</span>
-					<span class="userfield clan">(Clan)</span>
-					<span class="hidden clanId"></span>
-					<span class="hidden prevous-target-Id"></span>
-					<span class="ui-icon ui-icon-closethick close"></span>
-				</li>
 			</ul>
 			<div class="buttons">
 				<div class="openAddPerson">Add</div>
@@ -66,24 +40,11 @@
 				</div>
 			</div>
 		</div>
-
 		<div class="shuffle">
 			<h2>Shuffle Results</h2>
 			<ul id="shuffle-results">
-<!--
-				<li class="ui-widget ui-corner-all ui-state-default">
-					<span class="userfield name">Daniel</span>
-					<span class="hidden userId"></span>
-					<span class="userfield clan">(Clan)</span>
-					<span class="hidden clanId"></span>
-					<span class="ui-icon ui-icon-circle-arrow-e rightArrow"></span>
-					<span class="userfield target">Jean</span>
-					<span class="hidden targetId"></span>
-				</li>
--->
 			</ul>
 		</div>
-
 	</div>
 </body>
 </html>
