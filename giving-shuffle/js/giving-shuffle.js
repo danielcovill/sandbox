@@ -6,6 +6,16 @@ function getGuid() {
 	});
 }
 
+function userIdExists(id) {
+	var result = false;
+	$('#people-list>li>.userId').each(function(index, element) {
+		if($(element).text().toLowerCase() == id.toLowerCase()) {
+			result = true;
+			return false;//same as 'break'
+		}
+	});
+	return result;
+}
 function userNameExists(name) {
 	var result = false;
 	$('#people-list>li>.name').each(function(index, element) {
@@ -18,9 +28,13 @@ function userNameExists(name) {
 }
 
 function getClanId(clan) {
+	var result = getGuid();
 	$('#people-list>li').each(function(index, element) {
-		$(element).find('.clan');
+		if($(element).find('.clan').text() == '(' + clan + ')') {
+			result = $(element).find('.clanId').text();
+		}
 	});
+	return result;
 }
 
 function importUser(name, id, clan, clanid, prevTargetId) {
@@ -33,8 +47,8 @@ function importUser(name, id, clan, clanid, prevTargetId) {
 		if(clan) {
 			clanElement.text('(' + clan + ')');
 		}
-		if(!clanId) {
-			clanId = $(document.createElement('span')).addClass('hidden clanId').text(getGuid());
+		if(typeof clanId !== 'undefined') {
+			clanIdElement = $(document.createElement('span')).addClass('hidden clanId').text(getGuid());
 		}
 		var deleteIcon = $(document.createElement('span'))
 			.addClass('ui-icon ui-icon-closethick close')
@@ -47,7 +61,9 @@ function importUser(name, id, clan, clanid, prevTargetId) {
 		newPersonElement.append(nameElement);
 		newPersonElement.append(userId);
 		newPersonElement.append(clanElement);
-		newPersonElement.append(clanId);
+		if(typeof clanIdElement !== 'undefined') {
+			newPersonElement.append(clanIdElement);
+		}
 		newPersonElement.append(deleteIcon);
 		$('#people-list').append(newPersonElement);
 	} else {
@@ -91,10 +107,7 @@ function addNewUser(name, clan) {
 		if(clan) {
 			clanElement.text('(' + clan + ')');
 		}
-		var clanId = getClanId(clan);
-		if(!clanId) {
-			clanId = $(document.createElement('span')).addClass('hidden clanId').text(getGuid());
-		}
+		clanId = $(document.createElement('span')).addClass('hidden clanId').text(getClanId(clan));
 		var deleteIcon = $(document.createElement('span'))
 			.addClass('ui-icon ui-icon-closethick close')
 			.button().click(function() {
@@ -178,18 +191,15 @@ function shuffleArray(array) {
  * Adds a person element to a 2d array where elements are grouped by their clan
  */
 function addElementToGroupCollection(element, collection) {
+	var clanExists = false;
 	for(var i=0;i<collection.length;i++) {
-		var clanExists = false;
 		if(!collection[i][0].clanId && !element.clanId || 
 			 collection[i][0].clanId == element.clanId) {
 			clanExists = true;
 			collection[i].push(element);
 		}
-		if(!clanExists) {
-			collection.push([ element ]);
-		}
 	}
-	if(collection.length == 0) {
+	if(!clanExists) {
 		collection.push([ element ]);
 	}
 }
