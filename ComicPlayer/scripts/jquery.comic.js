@@ -136,7 +136,7 @@
 					'top': -(prevImage.position().top) + 'px',
 					'left': -(prevImage.position().left) + 'px'
 				}, comicPlayer.settings['animation-duration'], function() { 
-					current_images[current_images.length - 1].remove();
+					$(current_images[current_images.length - 1]).remove();
 				});
 			}
 		},
