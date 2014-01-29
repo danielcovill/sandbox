@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<!--Scripts-->
+<script type="text/javascript" src="scripts/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.comic.js"></script>
+
+<!--Styles-->
+<link rel="stylesheet" href="styles/reset.css" type="text/css" media="screen">
+</head>
+<body>
+	<style type="text/css">
+	body {
+		background-color: #000;
+	}
+	#comic_player {
+		margin: 0 auto;
+		width: 820px;
+	}
+	#backButton {
+		margin-top: 20px;
+		text-align: center;
+	}
+	</style>
+	<script type="text/javascript">
+		$(function() { $("#comic_player").comicPlayer({'cell-border':'2px solid black'}); });
+	</script>
+	<div id="comic_player">
+	</div>
+	<p id="backButton">
+	<a href="#" onclick="$('#comic_player').comicPlayer('page_back');">Back</a>
+	</p>
+</body>
+</html>

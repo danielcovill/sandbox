@@ -1,0 +1,67 @@
+{ "panels" : [
+	{ "id" : "motorcycle",
+		"src" : "images/1.png",
+		"destinations" : [ 
+		{ "id" : "tulips",
+			"shape" : "rect",
+			"coords" : "0, 0, 390, 480" },
+		{ "id" : "mj",
+			"shape" : "rect",
+			"coords" : "390, 0, 780, 480" }
+		]
+	},
+	{ "id" : "tulips",
+		"src" : "images/2.png",
+		"destinations" : [ 
+		{ "id" : "hunters",
+			"shape" : "rect",
+			"coords" : "0, 0, 390, 480" },
+		{ "id" : "trees",
+			"shape" : "rect",
+			"coords" : "390, 0, 780, 480" }
+		]
+	},
+	{ "id" : "mj",
+		"src" : "images/3.jpg",
+		"destinations" : [ 
+		{ "id" : "bmw",
+			"shape" : "rect",
+			"coords" : "0, 0, 390, 480" },
+		{ "id" : "man",
+			"shape" : "rect",
+			"coords" : "390, 0, 780, 480" }
+		]
+	},
+	{ "id" : "hunters",
+		"src" : "images/4.png",
+		"destinations" : [ 
+		{ "id" : "tulips",
+			"shape" : "rect",
+			"coords" : "0, 0, 390, 480" },
+		{ "id" : "woman",
+			"shape" : "rect",
+			"coords" : "390, 0, 780, 480" }
+		]
+	},
+	{ "id" : "trees",
+		"src" : "images/5.jpg",
+		"destinations" : []
+	},
+	{ "id" : "bmw",
+		"src" : "images/6.jpg",
+		"destinations" : []
+	},
+	{ "id" : "man",
+		"src" : "images/7.png",
+		"destinations" : [ 
+		{ "id" : "woman",
+			"shape" : "rect",
+			"coords" : "0, 0, 390, 480" }
+		]
+	},
+	{ "id" : "woman",
+		"src" : "images/8.jpg",
+		"destinations" : []
+	}
+	]
+}
