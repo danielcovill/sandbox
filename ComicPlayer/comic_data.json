@@ -1,66 +1,81 @@
 { "panels" : [
-	{ "id" : "motorcycle",
-		"src" : "images/1.png",
+	{ "id" : "base",
+		"src" : "images/1_Base.jpg",
 		"destinations" : [ 
-		{ "id" : "tulips",
-			"shape" : "rect",
-			"coords" : "0, 0, 390, 480" },
-		{ "id" : "mj",
-			"shape" : "rect",
-			"coords" : "390, 0, 780, 480" }
+		{ "id" : "radio",
+			"coords" : "220, 264",
+			"height": "285",
+			"width": "140",
+	 		"src" : "images/1_Choice1.png" },
+		{ "id" : "computer",
+			"coords" : "642, 339",
+			"height": "231",
+			"width": "151",
+	 		"src" : "images/1_Choice2.png" }
 		]
 	},
-	{ "id" : "tulips",
-		"src" : "images/2.png",
+	{ "id" : "radio",
+		"src" : "images/2_Base.jpg",
 		"destinations" : [ 
-		{ "id" : "hunters",
-			"shape" : "rect",
-			"coords" : "0, 0, 390, 480" },
-		{ "id" : "trees",
-			"shape" : "rect",
-			"coords" : "390, 0, 780, 480" }
+		{ "id" : "end1",
+			"coords" : "121, 377",
+			"height": "253",
+			"width": "199",
+	 		"src" : "images/2_Choice1.png" },
+		{ "id" : "end2",
+			"coords" : "407, 22",
+			"height": "329",
+			"width": "438",
+	 		"src" : "images/2_Choice2.png" },
+		{ "id" : "end3",
+			"coords" : "636, 319",
+			"height": "233",
+			"width": "351",
+	 		"src" : "images/2_Choice3.png" }
 		]
 	},
-	{ "id" : "mj",
-		"src" : "images/3.jpg",
+	{ "id" : "computer",
+		"src" : "images/3_Base.jpg",
 		"destinations" : [ 
-		{ "id" : "bmw",
-			"shape" : "rect",
-			"coords" : "0, 0, 390, 480" },
-		{ "id" : "man",
-			"shape" : "rect",
-			"coords" : "390, 0, 780, 480" }
+		{ "id" : "end4",
+			"coords" : "5, 151",
+			"height": "348",
+			"width": "362",
+	 		"src" : "images/3_Choice1.png" },
+		{ "id" : "end5",
+			"coords" : "521, 22",
+			"height": "315",
+			"width": "403",
+	 		"src" : "images/3_Choice2.png" },
+		{ "id" : "end6",
+			"coords" : "759, 344",
+			"height": "172",
+			"width": "258",
+	 		"src" : "images/3_Choice3.png" }
 		]
 	},
-	{ "id" : "hunters",
-		"src" : "images/4.png",
-		"destinations" : [ 
-		{ "id" : "tulips",
-			"shape" : "rect",
-			"coords" : "0, 0, 390, 480" },
-		{ "id" : "woman",
-			"shape" : "rect",
-			"coords" : "390, 0, 780, 480" }
-		]
-	},
-	{ "id" : "trees",
-		"src" : "images/5.jpg",
+	{ "id" : "end1",
+		"src" : "images/4_Base.jpg",
 		"destinations" : []
 	},
-	{ "id" : "bmw",
-		"src" : "images/6.jpg",
+	{ "id" : "end2",
+		"src" : "images/5_Base.jpg",
 		"destinations" : []
 	},
-	{ "id" : "man",
-		"src" : "images/7.png",
-		"destinations" : [ 
-		{ "id" : "woman",
-			"shape" : "rect",
-			"coords" : "0, 0, 390, 480" }
-		]
+	{ "id" : "end3",
+		"src" : "images/6_Base.jpg",
+		"destinations" : []
 	},
-	{ "id" : "woman",
-		"src" : "images/8.jpg",
+	{ "id" : "end4",
+		"src" : "images/7_Base.jpg",
+		"destinations" : []
+	},
+	{ "id" : "end5",
+		"src" : "images/8_Base.jpg",
+		"destinations" : []
+	},
+	{ "id" : "end6",
+		"src" : "images/9_Base.jpg",
 		"destinations" : []
 	}
 	]

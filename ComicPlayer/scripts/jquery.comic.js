@@ -78,12 +78,8 @@
 							'position': 'absolute'
 						}
 					});
-					var comic_navmap = $('<map/>', {
-						'name': 'comic_navmap'
-					});
 					comic_player.append(comic_viewport);
 					comic_viewport.append(comic_page);
-					comic_viewport.append(comic_navmap);
 
 					var comic_data;
 					//pull data from json data and load first panel
@@ -95,7 +91,6 @@
 							settings: settings,
 							comic_viewport: comic_viewport,
 							comic_page: comic_page,
-							comic_navmap : comic_navmap,
 							image_preload: image_preload,
 							comic_data: comic_data
 						});
@@ -104,7 +99,7 @@
 					});
 
 					//clicking the mapped area loads up the new image and scrolls
-					comic_player.on('click', 'map>area', function() { 
+					comic_player.on('click', '.support_image', function() { 
 						methods.display_panel($this, $(this).data('destination'));
 						return false;
 					});
@@ -121,16 +116,14 @@
 		},
 		page_back : function() {
 			var comicPlayer = $(this).data('comicPlayer');
-			var current_images = comicPlayer.comic_page.find('img');
+			var current_images = comicPlayer.comic_page.find('.comic_cell_frame');
 			if(current_images.length > 1) {
 				var prevImage = $(current_images[current_images.length - 2]);
-				var prevImageName = prevImage.data('name');
+				var prevImageName = prevImage.children('img').data('name');
 
 				var matching_panels = $.grep(comicPlayer.comic_data, function(element, index) { 
 					return element.id === prevImageName;
 				});
-
-				loadMap(comicPlayer.comic_navmap, matching_panels[0].destinations, comicPlayer.image_preload);
 
 				comicPlayer.comic_page.animate({
 					'top': -(prevImage.position().top) + 'px',
@@ -146,50 +139,56 @@
 				return element.id === name;
 			});
 			if(!!matching_panels[0] && matching_panels.length === 1) {
+				var cell_frame = $('<div />', {
+					'class': 'comic_cell_frame',
+					'css': {
+						'height':comicPlayer.settings['viewport-height'],
+						'width':comicPlayer.settings['viewport-width']
+					}
+				});
 				//load the image into the comic pane
 				var current_image = $('<img />', {
 					'src': matching_panels[0].src,
 					'data-name': matching_panels[0].id,
-					'usemap': '#comic_navmap',
-					'width': '780',
-					'height': '480',
 					'alt': 'Comic panel',
 					'css': {
-						'height': '480',
-						'width': '780',
 						'margin': comicPlayer.settings['cell-margin'],
-						'border': comicPlayer.settings['cell-border'],
+						'border': comicPlayer.settings['cell-border']
 					}
 				});
-				comicPlayer.comic_page.append(current_image);
-				loadMap(comicPlayer.comic_navmap, matching_panels[0].destinations, comicPlayer.image_preload);
+				cell_frame.append(current_image);
+				comicPlayer.comic_page.append(cell_frame);
+				loadSupportImages(cell_frame, matching_panels[0].destinations);
 
 				//pan the view to the new image
 				comicPlayer.comic_page.animate({
-					'top': -(current_image.position().top) + 'px',
-					'left': -(current_image.position().left) + 'px'
+					'top': -(cell_frame.position().top) + 'px',
+					'left': -(cell_frame.position().left) + 'px'
 				}, comicPlayer.settings['animation-duration']);
 			} else {
 				throw 'Data mapping error (jquery.comic.js)';
 			}	
-		},
+		}
 	};
-	function loadMap(map, destinations, preload) {
-		map.empty();
-
-		//pre-load all the possible destination images and load the image map that can trigger them
-		image_preload = [];
+	function loadSupportImages(current_frame, destinations) {
+		//load and position all the supporting images
 		$.each(destinations, function(index, element) {
-			var preload_image = new Image();
-			preload_image.src = destinations[index].src;
-			preload.push(preload_image);
-			map.append($('<area />', { 
-				'shape': destinations[index].shape,
-				'coords': destinations[index].coords,
-				'href': '#',
+			var support_container = $("<div />", {
+				'class': 'support_container',
+				'css': {
+					'left': destinations[index].coords.split(',')[0] + 'px',
+					'top': destinations[index].coords.split(',')[1] + 'px',
+					'height': destinations[index].height,
+					'width': destinations[index].width
+				}
+			});	
+			support_container.append($('<img />', {
+				'class': 'support_image',
 				'data-destination': destinations[index].id,
-				'class': 'js-panel_shift'
+				'src': destinations[index].src,
+				'alt': destinations[index].id
 			}));
+			current_frame.append(support_container);
 		});
 	}
 })( jQuery );

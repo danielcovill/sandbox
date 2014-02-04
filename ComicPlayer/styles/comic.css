@@ -1,0 +1,14 @@
+.comic_cell_frame {
+	position: relative;
+	float: left;
+}
+.comic_cell_frame .support_container {
+	position: absolute;
+}
+.comic_cell_frame .support_container .support_image {
+	visibility: hidden;
+}
+.comic_cell_frame .support_container:hover .support_image {
+	visibility: visible;
+	cursor: pointer;
+}
